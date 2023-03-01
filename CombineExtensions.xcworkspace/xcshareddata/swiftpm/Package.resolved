@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "gauntlet-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krogerco/Gauntlet-iOS.git",
+      "state" : {
+        "revision" : "4a4fe12bb927e775112c97686f57c52392d72ae1",
+        "version" : "1.1.0"
+      }
+    }
+  ],
+  "version" : 2
+}
