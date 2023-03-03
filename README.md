@@ -25,12 +25,31 @@ The easiest way to install Gauntlet is by adding a dependency via SPM.
 ```swift
         .testTarget(
             name: "MyTests",
-            dependencies: ["MyFramework", "CombineExtensions"],
+            dependencies: [
+                .byName(name: "MyFramework")
+                .product(name: "CombineExtensions", package: "CombineExtensions-iOS")
+            ],
             path: "MyFrameworkTests"
         )
 ```
 
 ## How to Use Combine Extensions
+
+### Sink To Function Reference 
+
+Prevent retain cycles by sinking to a function reference on a weakly retained object.
+
+```swift
+// Good
+publisher
+    .sink(to: CartViewModel.handleEvent, on: self, ownership: .weak) // Safely captured!
+    .store(in: &subscriptions)
+    
+// Bad
+publisher
+    .sink(to: self.handleEvent) // `self` captured in subscription, causing retain cycle.
+    .store(in: &subscriptions)
+```
 
 ## Documentation
 
