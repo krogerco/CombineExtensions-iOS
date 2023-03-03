@@ -13,7 +13,7 @@ final class SinkTests: XCTestCase {
         let object = MockObject<Void>()
 
         Just(34)
-            .sink(to: MockObject<Void>.handle0, on: object, ownership: .strong)
+            .sink(to: MockObject<Void>.functionWithZeroParemeters, on: object, ownership: .strong)
             .store(in: &subscriptions)
 
         wait(for: object)
@@ -25,11 +25,11 @@ final class SinkTests: XCTestCase {
 
         // When
         Just("strong")
-            .sink(to: MockObject<String>.handle, on: object, ownership: .strong)
+            .sink(to: MockObject<String>.functionWithOneParemeter, on: object, ownership: .strong)
             .store(in: &subscriptions)
 
         Just("weak")
-            .sink(to: MockObject<String>.handle, on: object, ownership: .weak)
+            .sink(to: MockObject<String>.functionWithOneParemeter, on: object, ownership: .weak)
             .store(in: &subscriptions)
 
         wait(for: object)
@@ -39,6 +39,7 @@ final class SinkTests: XCTestCase {
     }
 
     func testWeakness() {
+
         // Given
         var object: MockObject<String>? = MockObject<String>()
         weak var weakObject = object
@@ -46,18 +47,20 @@ final class SinkTests: XCTestCase {
         let publisher = CurrentValueSubject<String, Never>("String")
 
         publisher
-            .sink(to: MockObject<String>.handle, on: weakObject!, ownership: .weak)
+            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .weak)
             .store(in: &subscriptions)
 
         XCTAssertNotNil(weakObject)
 
+        // When
         object = nil
 
+        // Then
         XCTAssertNil(weakObject)
-
     }
 
     func testStrongness() {
+
         // Given
         var object: MockObject<String>? = MockObject<String>()
         weak var weakObject = object
@@ -65,14 +68,37 @@ final class SinkTests: XCTestCase {
         let publisher = CurrentValueSubject<String, Never>("String")
 
         publisher
-            .sink(to: MockObject<String>.handle, on: weakObject!, ownership: .strong)
+            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .strong)
             .store(in: &subscriptions)
 
         XCTAssertNotNil(weakObject)
 
+        // When
         object = nil
 
+        // Then
         XCTAssertNotNil(weakObject)
+    }
+
+    func testStrongness2() {
+
+        // Given
+        var object: MockObject<String>? = MockObject<String>()
+        weak var weakObject = object
+
+        let publisher = CurrentValueSubject<String, Never>("String")
+
+        let cancellable = publisher
+            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .strong)
+
+        XCTAssertNotNil(weakObject)
+
+        // When
+        object = nil
+        cancellable.cancel()
+
+        // Then
+        XCTAssertNil(weakObject)
     }
 
 }

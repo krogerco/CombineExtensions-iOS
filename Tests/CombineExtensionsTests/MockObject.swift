@@ -17,17 +17,13 @@ class MockObject<T> {
         expectation.expectedFulfillmentCount = fulfillCount
     }
 
-    func handle(value: T) {
+    func functionWithOneParemeter(value: T) {
         capturedValues.append(value)
         expectation.fulfill()
     }
 
-    func handle0() {
+    func functionWithZeroParemeters() {
         expectation.fulfill()
-    }
-
-    deinit {
-        print("bye!")
     }
 }
 
