@@ -7,19 +7,51 @@ final class SinkTests: XCTestCase {
 
     var subscriptions = Set<AnyCancellable>()
 
-    func testSink_0_parameters() {
+    func testSinkTo_zeroParameterFunction_weak() {
 
         // Given
         let object = MockObject<Void>()
 
-        Just(34)
+        Just("weak")
+            .sink(to: MockObject<Void>.functionWithZeroParemeters, on: object, ownership: .weak)
+            .store(in: &subscriptions)
+
+        wait(for: object)
+
+        XCTAssertEqual(object.functionCalls, 1)
+    }
+
+    func testSinkTo_zeroParameterFunction_strong() {
+
+        // Given
+        let object = MockObject<Void>()
+
+        Just("strong")
             .sink(to: MockObject<Void>.functionWithZeroParemeters, on: object, ownership: .strong)
             .store(in: &subscriptions)
 
         wait(for: object)
+
+        XCTAssertEqual(object.functionCalls, 1)
     }
 
-    func testSink_1_parameters() {
+    func testSinkTo_singleParamterFunction_weak() {
+
+        // Given
+        let object = MockObject<String>()
+
+        // When
+        Just("weak")
+            .sink(to: MockObject<String>.functionWithOneParemeter, on: object, ownership: .weak)
+            .store(in: &subscriptions)
+
+        wait(for: object)
+
+        // Then
+        XCTAssertEqual(object.capturedValues, ["weak"])
+    }
+
+    func testSinkTo_singleParamterFunction_strong() {
         // Given
         let object = MockObject<String>()
 
@@ -28,17 +60,13 @@ final class SinkTests: XCTestCase {
             .sink(to: MockObject<String>.functionWithOneParemeter, on: object, ownership: .strong)
             .store(in: &subscriptions)
 
-        Just("weak")
-            .sink(to: MockObject<String>.functionWithOneParemeter, on: object, ownership: .weak)
-            .store(in: &subscriptions)
-
         wait(for: object)
 
         // Then
-        XCTAssertEqual(object.capturedValues, ["strong", "weak"])
+        XCTAssertEqual(object.capturedValues, ["strong"])
     }
 
-    func testWeakness() {
+    func testSinkTo_zeroParameterFunction_weak_weaklyRetains() {
 
         // Given
         var object: MockObject<String>? = MockObject<String>()
@@ -59,7 +87,7 @@ final class SinkTests: XCTestCase {
         XCTAssertNil(weakObject)
     }
 
-    func testStrongness() {
+    func testSinkTo_zeroParameterFunction_weak_stronglyRetains() {
 
         // Given
         var object: MockObject<String>? = MockObject<String>()
@@ -80,7 +108,7 @@ final class SinkTests: XCTestCase {
         XCTAssertNotNil(weakObject)
     }
 
-    func testStrongness2() {
+    func testSinkTo_singleParameterFunction_weak_weaklyRetains() {
 
         // Given
         var object: MockObject<String>? = MockObject<String>()
@@ -88,17 +116,37 @@ final class SinkTests: XCTestCase {
 
         let publisher = CurrentValueSubject<String, Never>("String")
 
-        let cancellable = publisher
-            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .strong)
+        publisher
+            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .weak)
+            .store(in: &subscriptions)
 
         XCTAssertNotNil(weakObject)
 
         // When
         object = nil
-        cancellable.cancel()
 
         // Then
         XCTAssertNil(weakObject)
     }
 
+    func testSinkTo_singleParameterFunction_weak_stronglyRetains() {
+
+        // Given
+        var object: MockObject<String>? = MockObject<String>()
+        weak var weakObject = object
+
+        let publisher = CurrentValueSubject<String, Never>("String")
+
+        publisher
+            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .strong)
+            .store(in: &subscriptions)
+
+        XCTAssertNotNil(weakObject)
+
+        // When
+        object = nil
+
+        // Then
+        XCTAssertNotNil(weakObject)
+    }
 }

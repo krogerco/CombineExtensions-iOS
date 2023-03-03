@@ -12,17 +12,20 @@ class MockObject<T> {
 
     let expectation = XCTestExpectation(description: "sample object done")
     var capturedValues: [T] = []
+    var functionCalls: Int = 0
 
     init(fulfillCount: Int = 1) {
         expectation.expectedFulfillmentCount = fulfillCount
     }
 
     func functionWithOneParemeter(value: T) {
+        functionCalls += 1
         capturedValues.append(value)
         expectation.fulfill()
     }
 
     func functionWithZeroParemeters() {
+        functionCalls += 1
         expectation.fulfill()
     }
 }
