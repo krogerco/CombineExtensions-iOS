@@ -1,4 +1,4 @@
-# Subscritions
+# Subscriptions
 
 Extentions for subscribing to combine pipelines.
 

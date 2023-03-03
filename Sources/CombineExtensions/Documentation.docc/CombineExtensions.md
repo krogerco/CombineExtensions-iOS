@@ -1,6 +1,6 @@
 # ``CombineExtensions``
 
-Barcade is all-in-one scanning solution for Kroger iOS apps. It wraps and abstracts multiple underlying scanning technologies to bring you a unified scanning API. 
+CombineExtensions provides convieneice functions to Combine to make working with UIKit much easier.
 
 ## Topics
 
