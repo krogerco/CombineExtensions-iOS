@@ -35,7 +35,7 @@ The easiest way to install Gauntlet is by adding a dependency via SPM.
 
 ## How to Use Combine Extensions
 
-### Sink To Function Reference 
+### Sink to Function Reference 
 
 Prevent retain cycles by sinking to a function reference on a weakly retained object.
 
@@ -50,6 +50,17 @@ publisher
     .sink(to: self.handleEvent) // `self` captured in subscription, causing retain cycle.
     .store(in: &subscriptions)
 ```
+
+### Weakly Assign
+
+The default Combine `assign(to:on:)` function strongly retains the object. We have provided an overload of that function to allow retaining that object weakly. 
+
+```swift
+publisher
+    .assign(to: \.textfield.text, on: self, ownership: .weak)
+    .store(in: &subscriptions)
+```
+
 
 ## Documentation
 

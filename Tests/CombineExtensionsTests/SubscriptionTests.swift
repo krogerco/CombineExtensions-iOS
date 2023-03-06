@@ -149,4 +149,78 @@ final class SinkTests: XCTestCase {
         // Then
         XCTAssertNotNil(weakObject)
     }
+
+    // MAKR: - Assign To
+
+    func testAssignTo_weak() {
+
+        // Given
+        let object = MockObject<String>()
+
+        // When
+        Just(["weak"])
+            .assign(to: \.capturedValues, on: object, ownership: .weak)
+            .store(in: &subscriptions)
+
+        // Then
+        XCTAssertEqual(object.capturedValues, ["weak"])
+    }
+
+    func testAssignTo_strong() {
+
+        // Given
+        let object = MockObject<String>()
+
+        // When
+        Just(["strong"])
+            .assign(to: \.capturedValues, on: object, ownership: .strong)
+            .store(in: &subscriptions)
+
+        // Then
+        XCTAssertEqual(object.capturedValues, ["strong"])
+    }
+
+    func testAssignTo_weaklyRetains() {
+
+        // Given
+        var object: MockObject<String>? = MockObject<String>()
+        weak var weakObject = object
+
+        let publisher = CurrentValueSubject<String, Never>("String")
+
+        publisher
+            .collect()
+            .assign(to: \.capturedValues, on: weakObject!, ownership: .weak)
+            .store(in: &subscriptions)
+
+        XCTAssertNotNil(weakObject)
+
+        // When
+        object = nil
+
+        // Then
+        XCTAssertNil(weakObject)
+    }
+
+    func testAssignTo_stronglyRetains() {
+
+        // Given
+        var object: MockObject<String>? = MockObject<String>()
+        weak var weakObject = object
+
+        let publisher = CurrentValueSubject<String, Never>("String")
+
+        publisher
+            .collect()
+            .assign(to: \.capturedValues, on: weakObject!, ownership: .strong)
+            .store(in: &subscriptions)
+
+        XCTAssertNotNil(weakObject)
+
+        // When
+        object = nil
+
+        // Then
+        XCTAssertNotNil(weakObject)
+    }
 }
