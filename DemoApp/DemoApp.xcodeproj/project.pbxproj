@@ -89,6 +89,7 @@
 				33CF6ED629AEE1E000E24389 /* Sources */,
 				33CF6ED729AEE1E000E24389 /* Frameworks */,
 				33CF6ED829AEE1E000E24389 /* Resources */,
+				335831BB29B8046B00F0CEF3 /* Run Script - Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -146,6 +147,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		335831BB29B8046B00F0CEF3 /* Run Script - Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script - Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ -z ${GITHUB_CI} ]]; then\n    echo \"Running swiftlint\" \n    # Not running on GitHub (where lint is a separate step).\n    # Xcode path does not inherit the user shell path\n    PATH=${PATH}:/opt/homebrew/bin\n\n    # Lint the code\n    swiftlint lint\nelse\n    echo \"Skipping swiftlint in xcodebuild\" \nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		33CF6ED629AEE1E000E24389 /* Sources */ = {
