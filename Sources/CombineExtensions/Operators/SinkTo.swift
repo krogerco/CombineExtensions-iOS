@@ -52,17 +52,15 @@ extension Publisher where Failure == Never {
 
         switch ownership {
         case .strong:
-            return self
-                .sink { value in
-                    function(object)(value)
-                }
+            return sink { value in
+                function(object)(value)
+            }
 
         case .weak:
-            return self
-                .sink { [weak object] value in
-                    guard let object else { return }
-                    function(object)(value)
-                }
+            return sink { [weak object] value in
+                guard let object else { return }
+                function(object)(value)
+            }
         }
     }
 }
