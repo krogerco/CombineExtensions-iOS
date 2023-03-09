@@ -79,4 +79,26 @@ final class NotificationCenterExtensionTests: XCTestCase {
 
         XCTAssertEqual(object.capturedValues.map { $0.name.rawValue }, ["A", "B", "C", "D"])
     }
+
+    func testMergeManyNotificationNames_dedupe() {
+
+        // Given
+        let nameA = Notification.Name("A")
+        let object = MockObject<Notification>(fulfillCount: 1, assertForOverFulfill: true)
+
+        let names: [Notification.Name] = [nameA, nameA, nameA]
+        let nc = NotificationCenter()
+
+        nc.publisher(for: names)
+            .sink(to: MockObject<Notification>.functionWithOneParemeter, on: object, ownership: .strong)
+            .store(in: &subscriptions)
+
+        // When
+        nc.post(name: nameA, object: nil)
+
+        // Then
+        wait(for: object)
+
+        XCTAssertEqual(object.capturedValues.map { $0.name.rawValue }, ["A"])
+    }
 }

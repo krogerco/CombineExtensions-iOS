@@ -14,8 +14,9 @@ class MockObject<T> {
     var capturedValues: [T] = []
     var functionCalls: Int = 0
 
-    init(fulfillCount: Int = 1) {
+    init(fulfillCount: Int = 1, assertForOverFulfill: Bool = true) {
         expectation.expectedFulfillmentCount = fulfillCount
+        expectation.assertForOverFulfill = assertForOverFulfill
     }
 
     func functionWithOneParemeter(value: T) {
