@@ -31,7 +31,7 @@ class MockObject<T> {
 }
 
 extension XCTestCase {
-    func wait<T>(for object: MockObject<T>, timeout: TimeInterval = 0.5) {
+    func wait<T>(for object: MockObject<T>, timeout: TimeInterval = 0.25) {
         wait(for: [object.expectation], timeout: timeout)
     }
 }

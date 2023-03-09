@@ -36,6 +36,8 @@ class CartViewModel {
 
 ## Assign to Property (Weakly)
 
+The default Combine `assign(to:on:)` function strongly retains the object. We have provided an overload to allow retaining that object weakly. 
+
 ```swift
 searchBar.text
     .receive(on: DispatchQueue.main)

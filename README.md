@@ -6,7 +6,7 @@
 ## Requirements
 
 - Xcode 13.2+
-- Swift 5.5+
+- Swift 5.7+
 
 ## Installation
 
@@ -20,7 +20,7 @@ The easiest way to install Gauntlet is by adding a dependency via SPM.
         )
 ```
 
-… then reference in your test target.
+…then reference in your test target.
 
 ```swift
         .testTarget(
@@ -47,13 +47,13 @@ publisher
     
 // Bad
 publisher
-    .sink(to: self.handleEvent) // `self` captured in subscription, causing retain cycle.
+    .sink(receiveValue: self.handleEvent) // `self` captured in subscription, causing retain cycle.
     .store(in: &subscriptions)
 ```
 
 ### Weakly Assign
 
-The default Combine `assign(to:on:)` function strongly retains the object. We have provided an overload of that function to allow retaining that object weakly. 
+The default Combine `assign(to:on:)` function strongly retains the object. We have provided an overload to allow retaining that object weakly. 
 
 ```swift
 publisher
@@ -61,10 +61,26 @@ publisher
     .store(in: &subscriptions)
 ```
 
+### Subscribe to Multiple `Notification.Name`s
+
+Use `NotificationCenter.publisher(for names:)` to subscribe to multiple notifications and funnel them into a single stream.
+
+```swift
+NotificationCenter.default.publisher(for: [Notification.Name.CartUpdate, Notification.Name.RefreshAll])
+    .sink { notification in 
+        // Notifications from either source are funneled into a single event.
+        switch notification.name {
+            case Notification.Name.CartUpdate: //
+            case Notification.Name.RefreshAll: //
+        }
+    }
+    .store(in: &subscriptions)
+```
+
 
 ## Documentation
 
-Gauntlet has full DocC documentation. After adding to your project, `Build Documentation` to add to your documentation viewer.
+`CombineExtensions` has full DocC documentation. After adding to your project, `Build Documentation` to add to your documentation viewer.
 
 ## Communication
 

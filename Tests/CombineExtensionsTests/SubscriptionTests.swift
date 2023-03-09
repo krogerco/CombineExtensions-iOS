@@ -16,11 +16,13 @@ final class SinkTests: XCTestCase {
             .sink(to: MockObject<Void>.functionWithZeroParemeters, on: object, ownership: .weak)
             .store(in: &subscriptions)
 
+
+
         wait(for: object)
 
         XCTAssertEqual(object.functionCalls, 1)
     }
-
+    
     func testSinkTo_zeroParameterFunction_strong() {
 
         // Given
