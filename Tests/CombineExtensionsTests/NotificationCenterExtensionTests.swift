@@ -12,7 +12,7 @@ final class NotificationCenterExtensionTests: XCTestCase {
 
     var subscriptions = Set<AnyCancellable>()
 
-    func testMergeManyNotificationNames_nilObject() {
+    func testMergeManyNotificationNames() {
 
         // Given
         let nameA = Notification.Name("A")
@@ -38,59 +38,17 @@ final class NotificationCenterExtensionTests: XCTestCase {
         XCTAssertEqual(object.capturedValues.map { $0.name.rawValue }, ["A", "B", "C"])
     }
 
-    func testMergeManyNotificationNames_withObject() {
-
-        // Given
-        class NotificationPoster { }
-
-        let posterA = NotificationPoster()
-        let posterB = NotificationPoster()
-
-        let nameA = Notification.Name("A")
-        let nameB = Notification.Name("B")
-        let nameC = Notification.Name("C")
-        let nameD = Notification.Name("D")
-
-        let object = MockObject<Notification>(fulfillCount: 4)
-
-        let names: [Notification.Name] = [nameA, nameB, nameC, nameD]
-        let nc = NotificationCenter()
-
-        nc.publisher(for: names, object: posterA)
-            .sink(receiveValue: object.functionWithOneParemeter)
-            .store(in: &subscriptions)
-
-        // When
-
-        // Expect these to be ignored
-        nc.post(name: nameD, object: posterB)
-        nc.post(name: nameA, object: posterB)
-        nc.post(name: nameA, object: nil)
-        nc.post(name: nameD, object: nil)
-
-        // Expect these to be captured
-        nc.post(name: nameA, object: posterA)
-        nc.post(name: nameB, object: posterA)
-        nc.post(name: nameC, object: posterA)
-        nc.post(name: nameD, object: posterA)
-
-        // Then
-        wait(for: object)
-
-        XCTAssertEqual(object.capturedValues.map { $0.name.rawValue }, ["A", "B", "C", "D"])
-    }
-
     func testMergeManyNotificationNames_dedupe() {
 
         // Given
         let nameA = Notification.Name("A")
         let object = MockObject<Notification>(fulfillCount: 1, assertForOverFulfill: true)
 
-        let names: [Notification.Name] = [nameA, nameA, nameA]
+        let names: [Notification.Name] = [nameA, nameA, nameA] // Adding multiples of the same Name, but only want one notification.
         let nc = NotificationCenter()
 
         nc.publisher(for: names)
-            .sink(to: MockObject<Notification>.functionWithOneParemeter, on: object, ownership: .strong)
+            .sink(receiveValue: object.functionWithOneParemeter)
             .store(in: &subscriptions)
 
         // When

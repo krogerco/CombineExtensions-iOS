@@ -14,13 +14,12 @@ extension NotificationCenter {
     ///
     /// - Parameters:
     ///   - names: The names of the notifications to publish. Duplicate names will be ignored.
-    ///   - object: The object posting the named notfication. If `nil`, the publisher emits elements for any object producing a notification with the given names.
     /// - Returns: A publisher that emits events when broadcasting notifications with the given names.
-    public func publisher(for names: [Notification.Name], object: AnyObject? = nil) -> AnyPublisher<Notification, Never> {
+    public func publisher(for names: [Notification.Name]) -> AnyPublisher<Notification, Never> {
 
         let publishers = Set(names) // dedupe
                 .map { notificationName in
-                    self.publisher(for: notificationName, object: object)
+                    self.publisher(for: notificationName, object: nil)
                 }
 
         return Publishers.MergeMany(publishers).eraseToAnyPublisher()
