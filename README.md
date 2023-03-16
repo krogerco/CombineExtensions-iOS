@@ -77,10 +77,36 @@ NotificationCenter.default.publisher(for: [Notification.Name.CartUpdate, Notific
     .store(in: &subscriptions)
 ```
 
+### `withLatestFrom` Operator
+
+Merges two publishers into a single publisher by combining each value from `self` with the _latest_ value from the other publisher, if any.
+
+```swift
+let buttonTap = PassthroughSubject<Void, Never>()
+let formData = CurrentValueSubject<FormData, Never>()
+
+let publisher = buttonTap
+    .withLatestFrom(formData)
+    .sink { _, formData in 
+        //
+    }
+}
+
+buttonTap.send()
+formData.send(formData.updated()) // Won't trigger publisher, waiting on buttonTap to send again.
+formData.send(formData.updated())
+formData.send(formData.updated())
+buttonTap.send()
+```
+
 
 ## Documentation
 
+<<<<<<< HEAD
 `CombineExtensions` has full DocC documentation. After adding to your project, `Build Documentation` to add to your documentation viewer.
+=======
+CombineExtensions has full DocC documentation. After adding to your project, `Build Documentation` to add to your documentation viewer.
+>>>>>>> 9a6f27d (updated tests)
 
 ## Communication
 

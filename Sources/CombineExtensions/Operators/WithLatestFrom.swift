@@ -11,41 +11,36 @@ import Combine
 extension Publisher {
 
     ///  Merges two publishers into a single publisher by combining each value
-    ///  from self with the latest value from the second publisher, if any.
+    ///     from self with the latest value from the second publisher, if any.
     ///
     /// - Parameter other: Second observable source.
-    /// - Note: https://jasdev.me/notes/with-latest-from
-    ///         https://gist.github.com/freak4pc/8d46ea6a6f5e5902c3fb5eba440a55c3
-    public func withLatestFrom<Other: Publisher>( _ other: Other)
-    -> AnyPublisher<(Output, Other.Output), Failure>
-    where Other.Failure == Failure
+    /// - Returns: A publisher containing the result of combining each value of the self
+    ///            with the latest value from the second publisher, if any, using the
+    ///            specified result selector function.
+    public func withLatestFrom<Secondary: Publisher>( _ other: Secondary) -> AnyPublisher<(Output, Secondary.Output), Failure>
+        where Secondary.Failure == Failure
     {
-        let upstream = share()
-
-        return other
-            .map { second in upstream.map { ($0, second) } }
-            .switchToLatest()
-            .zip(upstream)
-            .map(\.0)
-            .eraseToAnyPublisher()
+        return Publishers.WithLatestFrom(upstream: self, secondary: other).eraseToAnyPublisher()
     }
+
 }
 
 extension Publishers {
-    public struct WithLatestFrom<Upstream: Publisher, Other: Publisher>: Publisher
+
+    struct WithLatestFrom<Upstream: Publisher, Other: Publisher>: Publisher
         where Upstream.Failure == Other.Failure
     {
 
+        /// Tuple represening the upstream and other output.
         public typealias Output = (Upstream.Output, Other.Output)
         public typealias Failure = Upstream.Failure
 
         let upstream: Upstream
         let second: Other
 
-        public init(upstream: Upstream, second: Other) {
-
+        public init(upstream: Upstream, secondary: Other) {
             self.upstream = upstream
-            self.second = second
+            self.second = secondary
         }
 
         public func receive<S: Subscriber>(subscriber: S) where Failure == S.Failure, Output == S.Input {
@@ -62,7 +57,7 @@ extension Publishers {
 
 extension Publishers.WithLatestFrom {
 
-    class Subscription<S: Subscriber>: Combine.Subscription where S.Input == Output, S.Failure == Failure {
+    class Subscription<S: Subscriber>: Combine.Subscription, CustomStringConvertible where S.Input == Output, S.Failure == Failure {
 
         let subscriber: S
         var latestValue: Other.Output?
@@ -76,6 +71,7 @@ extension Publishers.WithLatestFrom {
         init(upstream: Upstream,
              second: Other,
              subscriber: S) {
+
             self.upstream = upstream
             self.second = second
             self.subscriber = subscriber
@@ -84,34 +80,31 @@ extension Publishers.WithLatestFrom {
         }
 
         func request(_ demand: Subscribers.Demand) {
-        
-            upstreamSubscription = upstream
-                .print()
+
+            return upstreamSubscription = upstream
                 .sink(
                   receiveCompletion: { [subscriber] in subscriber.receive(completion: $0) },
                   receiveValue: { [weak self] value in
-                    guard let self = self else { return }
-                      Swift.print("latest", self.latestValue)
+                    guard let self else { return }
                     guard let latestValue = self.latestValue else { return }
 
                     _ = self.subscriber.receive((value, latestValue))
                 })
+
+
         }
 
         func trackLatestValue() {
 
-            let subscriber = AnySubscriber<Other.Output, Other.Failure>(
-                receiveSubscription: { [weak self] subscription in
-                    self?.secondSubscription = subscription
-                    subscription.request(.unlimited)
-                },
-                receiveValue: { [weak self] value in
-                    self?.latestValue = value
-                    return .unlimited
-                },
-                receiveCompletion: nil)
+            secondSubscription = second
+                .sink(receiveCompletion: {_ in },
+                      receiveValue: { [weak self] value in
+                     self?.latestValue = value
+                })
+        }
 
-            self.second.subscribe(subscriber)
+        var description: String {
+            "Publishers.WithLatestFrom<\(String(describing: S.Input.self)), \(String(describing: S.Failure.self))>.Subscription"
         }
 
         func cancel() {
