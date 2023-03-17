@@ -77,7 +77,6 @@ final class WithLatestFromTests: XCTestCase {
             )
             .store(in: &subscriptions)
 
-
         secondary.send("1")
         primary.send("A")
         secondary.send("2")
@@ -94,7 +93,6 @@ final class WithLatestFromTests: XCTestCase {
 
         XCTAssertTrue(completed)
     }
-
 
     func testPublisherInializer() {
 
@@ -129,6 +127,7 @@ final class WithLatestFromTests: XCTestCase {
         XCTAssertEqual(subscriptionDescription, "Publishers.WithLatestFrom<(String, String), Never>.Subscription")
     }
 
+    // swiftlint:disable force_unwrapping
     func testSubscriberRetainsPublishers() {
 
         var primary: PassthroughSubject<Int, Never>? = .init()
@@ -154,5 +153,5 @@ final class WithLatestFromTests: XCTestCase {
         XCTAssertNil(weakPrimary)
         XCTAssertNil(weakSecondary)
     }
+    // swiftlint:enable force_unwrapping
 }
-

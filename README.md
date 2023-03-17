@@ -102,11 +102,7 @@ buttonTap.send()
 
 ## Documentation
 
-<<<<<<< HEAD
-`CombineExtensions` has full DocC documentation. After adding to your project, `Build Documentation` to add to your documentation viewer.
-=======
 CombineExtensions has full DocC documentation. After adding to your project, `Build Documentation` to add to your documentation viewer.
->>>>>>> 9a6f27d (updated tests)
 
 ## Communication
 

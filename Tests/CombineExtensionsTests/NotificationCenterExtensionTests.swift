@@ -38,16 +38,16 @@ final class NotificationCenterExtensionTests: XCTestCase {
         let object = MockObject<Notification>(fulfillCount: 3)
 
         let names: [Notification.Name] = [nameA, nameB, nameC]
-        let nc = NotificationCenter()
+        let notificationCenter = NotificationCenter()
 
-        nc.publisher(for: names)
+        notificationCenter.publisher(for: names)
             .sink(to: MockObject<Notification>.functionWithOneParemeter, on: object, ownership: .strong)
             .store(in: &subscriptions)
 
         // When
-        nc.post(name: nameA, object: nil)
-        nc.post(name: nameB, object: nil)
-        nc.post(name: nameC, object: nil)
+        notificationCenter.post(name: nameA, object: nil)
+        notificationCenter.post(name: nameB, object: nil)
+        notificationCenter.post(name: nameC, object: nil)
 
         // Then
         wait(for: object)
@@ -62,14 +62,14 @@ final class NotificationCenterExtensionTests: XCTestCase {
         let object = MockObject<Notification>(fulfillCount: 1, assertForOverFulfill: true)
 
         let names: [Notification.Name] = [nameA, nameA, nameA] // Adding multiples of the same Name, but only want one notification.
-        let nc = NotificationCenter()
+        let notificationCenter = NotificationCenter()
 
-        nc.publisher(for: names)
+        notificationCenter.publisher(for: names)
             .sink(receiveValue: object.functionWithOneParemeter)
             .store(in: &subscriptions)
 
         // When
-        nc.post(name: nameA, object: nil)
+        notificationCenter.post(name: nameA, object: nil)
 
         // Then
         wait(for: object)

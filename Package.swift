@@ -12,10 +12,10 @@ let package = Package(
     products: [
         .library(
             name: "CombineExtensions",
-            targets: ["CombineExtensions"]),
+            targets: ["CombineExtensions"])
     ],
     dependencies: [
-        .package(url: "https://github.com/krogerco/Gauntlet-iOS.git", from: Version(1, 1, 0)),
+        .package(url: "https://github.com/krogerco/Gauntlet-iOS.git", from: Version(1, 1, 0))
     ],
     targets: [
         .target(
@@ -28,6 +28,6 @@ let package = Package(
                 .byName(name: "CombineExtensions"),
                 .product(name: "Gauntlet", package: "Gauntlet-iOS")
             ]
-        ),
+        )
     ]
 )

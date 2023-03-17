@@ -40,13 +40,11 @@ final class SinkTests: XCTestCase {
             .sink(to: MockObject<Void>.functionWithZeroParemeters, on: object, ownership: .weak)
             .store(in: &subscriptions)
 
-
-
         wait(for: object)
 
         XCTAssertEqual(object.functionCalls, 1)
     }
-    
+
     func testSinkTo_zeroParameterFunction_strong() {
 
         // Given
@@ -101,7 +99,7 @@ final class SinkTests: XCTestCase {
         let publisher = CurrentValueSubject<String, Never>("String")
 
         publisher
-            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .weak)
+            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .weak) // swiftlint:disable:this force_unwrapping
             .store(in: &subscriptions)
 
         XCTAssertNotNil(weakObject)
@@ -122,7 +120,7 @@ final class SinkTests: XCTestCase {
         let publisher = CurrentValueSubject<String, Never>("String")
 
         publisher
-            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .strong)
+            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .strong) // swiftlint:disable:this force_unwrapping
             .store(in: &subscriptions)
 
         XCTAssertNotNil(weakObject)
@@ -143,7 +141,7 @@ final class SinkTests: XCTestCase {
         let publisher = CurrentValueSubject<String, Never>("String")
 
         publisher
-            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .weak)
+            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .weak) // swiftlint:disable:this force_unwrapping
             .store(in: &subscriptions)
 
         XCTAssertNotNil(weakObject)
@@ -164,7 +162,7 @@ final class SinkTests: XCTestCase {
         let publisher = CurrentValueSubject<String, Never>("String")
 
         publisher
-            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .strong)
+            .sink(to: MockObject<String>.functionWithZeroParemeters, on: weakObject!, ownership: .strong) // swiftlint:disable:this force_unwrapping
             .store(in: &subscriptions)
 
         XCTAssertNotNil(weakObject)
@@ -216,7 +214,7 @@ final class SinkTests: XCTestCase {
 
         publisher
             .collect()
-            .assign(to: \.capturedValues, on: weakObject!, ownership: .weak)
+            .assign(to: \.capturedValues, on: weakObject!, ownership: .weak) // swiftlint:disable:this force_unwrapping
             .store(in: &subscriptions)
 
         XCTAssertNotNil(weakObject)
@@ -238,7 +236,7 @@ final class SinkTests: XCTestCase {
 
         publisher
             .collect()
-            .assign(to: \.capturedValues, on: weakObject!, ownership: .strong)
+            .assign(to: \.capturedValues, on: weakObject!, ownership: .strong) // swiftlint:disable:this force_unwrapping
             .store(in: &subscriptions)
 
         XCTAssertNotNil(weakObject)

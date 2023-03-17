@@ -35,9 +35,8 @@ extension Publisher {
     ///            with the latest value from the second publisher, if any, using the
     ///            specified result selector function.
     public func withLatestFrom<Secondary: Publisher>( _ other: Secondary) -> AnyPublisher<(Output, Secondary.Output), Failure>
-        where Secondary.Failure == Failure
-    {
-        return Publishers.WithLatestFrom(upstream: self, secondary: other).eraseToAnyPublisher()
+        where Secondary.Failure == Failure {
+        Publishers.WithLatestFrom(upstream: self, secondary: other).eraseToAnyPublisher()
     }
 
 }
@@ -45,22 +44,21 @@ extension Publisher {
 extension Publishers {
 
     struct WithLatestFrom<Upstream: Publisher, Other: Publisher>: Publisher
-        where Upstream.Failure == Other.Failure
-    {
+        where Upstream.Failure == Other.Failure {
 
         /// Tuple represening the upstream and other output.
-        public typealias Output = (Upstream.Output, Other.Output)
-        public typealias Failure = Upstream.Failure
+        typealias Output = (Upstream.Output, Other.Output)
+        typealias Failure = Upstream.Failure
 
         let upstream: Upstream
         let second: Other
 
-        public init(upstream: Upstream, secondary: Other) {
+        init(upstream: Upstream, secondary: Other) {
             self.upstream = upstream
             self.second = secondary
         }
 
-        public func receive<S: Subscriber>(subscriber: S) where Failure == S.Failure, Output == S.Input {
+        func receive<S: Subscriber>(subscriber: S) where Failure == S.Failure, Output == S.Input {
             let sub = Subscription(
                 upstream: upstream,
                 second: second,
@@ -74,7 +72,9 @@ extension Publishers {
 
 extension Publishers.WithLatestFrom {
 
-    class Subscription<S: Subscriber>: Combine.Subscription, CustomStringConvertible where S.Input == Output, S.Failure == Failure {
+    class Subscription<S: Subscriber>: Combine.Subscription, CustomStringConvertible
+        where S.Input == Output, S.Failure == Failure
+    {
 
         let subscriber: S
         var latestValue: Other.Output?
@@ -98,7 +98,7 @@ extension Publishers.WithLatestFrom {
 
         func request(_ demand: Subscribers.Demand) {
 
-            return upstreamSubscription = upstream
+            upstreamSubscription = upstream
                 .sink(
                   receiveCompletion: { [subscriber] in subscriber.receive(completion: $0) },
                   receiveValue: { [weak self] value in
@@ -106,15 +106,14 @@ extension Publishers.WithLatestFrom {
                     guard let latestValue = self.latestValue else { return }
 
                     _ = self.subscriber.receive((value, latestValue))
-                })
-
+                  })
 
         }
 
         func trackLatestValue() {
 
             secondSubscription = second
-                .sink(receiveCompletion: {_ in },
+                .sink(receiveCompletion: { _ in },
                       receiveValue: { [weak self] value in
                      self?.latestValue = value
                 })
