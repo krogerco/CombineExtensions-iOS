@@ -22,22 +22,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import SwiftUI
-import CombineExtensions
+import Foundation
+import Combine
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
+extension Publisher where Failure == Never {
+
+    /// Assigns each element from a publisher to a property on an object.
+    ///
+    /// Prefer assign to publisher.
+    ///
+    /// - Parameters:
+    ///   - keyPath: A key path that indicates the property to assign.
+    ///   - object: The object that contains the property. The subscriber assigns the object’s property every time it receives a new value.
+    ///   - ownership: The retainment / ownership strategy for the object.
+    /// - Returns: A cancellable instance, which you use when you end assignment of the received value.
+    ///            Deallocation of the result will tear down the subscription stream.
+    func assign<T: AnyObject>(
+        to keyPath: ReferenceWritableKeyPath<T, Output>,
+        on object: T,
+        ownership: ObjectOwnership
+    ) -> AnyCancellable {
+
+        switch ownership {
+        case .weak:
+            return sink { [weak object] value in
+                object?[keyPath: keyPath] = value
+            }
+
+        case .strong:
+            return assign(to: keyPath, on: object)
         }
-        .padding()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

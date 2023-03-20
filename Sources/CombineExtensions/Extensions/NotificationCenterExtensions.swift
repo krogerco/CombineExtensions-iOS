@@ -22,22 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import SwiftUI
-import CombineExtensions
+import Foundation
+import Combine
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-        }
-        .padding()
-    }
-}
+extension NotificationCenter {
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    /// Merges notifications from multiple `Notification.Name`s into a single event stream.
+    ///
+    /// - Parameters:
+    ///   - names: The names of the notifications to publish. Duplicate names will be ignored.
+    /// - Returns: A publisher that emits events when broadcasting notifications with the given names.
+    public func publisher(for names: [Notification.Name]) -> AnyPublisher<Notification, Never> {
+
+        let publishers = Set(names) // dedupe
+                .map { notificationName in
+                    self.publisher(for: notificationName, object: nil)
+                }
+
+        return Publishers.MergeMany(publishers).eraseToAnyPublisher()
     }
+
 }

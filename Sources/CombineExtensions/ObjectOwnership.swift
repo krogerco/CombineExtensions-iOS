@@ -22,22 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import SwiftUI
-import CombineExtensions
+import Foundation
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-        }
-        .padding()
-    }
-}
+/// Retain strategy for objects in subscription operators
+public enum ObjectOwnership {
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+    /// Strongly retains the object in the subscription
+    case strong
+
+    /// Weakly retains the object in the subscription.
+    case weak
 }

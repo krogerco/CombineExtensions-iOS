@@ -22,22 +22,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import SwiftUI
-import CombineExtensions
+import Foundation
+import XCTest
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-        }
-        .padding()
+class MockObject<T> {
+
+    let expectation = XCTestExpectation(description: "sample object done")
+    var capturedValues: [T] = []
+    var functionCalls: Int = 0
+
+    init(fulfillCount: Int = 1, assertForOverFulfill: Bool = true) {
+        expectation.expectedFulfillmentCount = fulfillCount
+        expectation.assertForOverFulfill = assertForOverFulfill
+    }
+
+    func functionWithOneParemeter(value: T) {
+        functionCalls += 1
+        capturedValues.append(value)
+        expectation.fulfill()
+    }
+
+    func functionWithZeroParemeters() {
+        functionCalls += 1
+        expectation.fulfill()
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+extension XCTestCase {
+    func wait<T>(for object: MockObject<T>, timeout: TimeInterval = 0.25) {
+        wait(for: [object.expectation], timeout: timeout)
     }
 }
