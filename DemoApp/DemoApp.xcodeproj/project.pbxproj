@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		332DAA7229CA58FE00DD3E46 /* NotificationCenterExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332DAA7129CA58FE00DD3E46 /* NotificationCenterExample.swift */; };
 		33CF6EDE29AEE1E000E24389 /* DemoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CF6EDD29AEE1E000E24389 /* DemoAppApp.swift */; };
 		33CF6EE029AEE1E000E24389 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CF6EDF29AEE1E000E24389 /* ContentView.swift */; };
 		33CF6EE229AEE1E100E24389 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33CF6EE129AEE1E100E24389 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		332DAA7129CA58FE00DD3E46 /* NotificationCenterExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterExample.swift; sourceTree = "<group>"; };
 		33CF6EDA29AEE1E000E24389 /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33CF6EDD29AEE1E000E24389 /* DemoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppApp.swift; sourceTree = "<group>"; };
 		33CF6EDF29AEE1E000E24389 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				33CF6EE129AEE1E100E24389 /* Assets.xcassets */,
 				33CF6EE329AEE1E100E24389 /* DemoApp.entitlements */,
 				33CF6EE429AEE1E100E24389 /* Preview Content */,
+				332DAA7129CA58FE00DD3E46 /* NotificationCenterExample.swift */,
 			);
 			path = DemoApp;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33CF6EE029AEE1E000E24389 /* ContentView.swift in Sources */,
+				332DAA7229CA58FE00DD3E46 /* NotificationCenterExample.swift in Sources */,
 				33CF6EDE29AEE1E000E24389 /* DemoAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

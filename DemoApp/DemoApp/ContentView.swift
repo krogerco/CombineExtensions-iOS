@@ -27,12 +27,12 @@ import CombineExtensions
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
+        TabView {
+            NotificationCenterExample()
+                .tabItem {
+                    Label("NotificationCenter", image: "pencil")
+                }
         }
-        .padding()
     }
 }
 
