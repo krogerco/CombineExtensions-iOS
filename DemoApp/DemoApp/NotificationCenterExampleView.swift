@@ -76,7 +76,7 @@ class NotificationCenterViewModel: ObservableObject {
 
 // MARK: - View
 
-struct NotificationCenterExample: View {
+struct NotificationCenterExampleView: View {
 
     @StateObject var viewModel = NotificationCenterViewModel()
 

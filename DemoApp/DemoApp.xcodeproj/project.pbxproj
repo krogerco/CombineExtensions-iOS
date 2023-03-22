@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		332DAA7229CA58FE00DD3E46 /* NotificationCenterExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332DAA7129CA58FE00DD3E46 /* NotificationCenterExample.swift */; };
-		332DAA7429CA732700DD3E46 /* SubscriptionExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332DAA7329CA732700DD3E46 /* SubscriptionExamples.swift */; };
-		332DAA7629CB9E4500DD3E46 /* WithLatestFromExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332DAA7529CB9E4500DD3E46 /* WithLatestFromExample.swift */; };
+		332DAA7229CA58FE00DD3E46 /* NotificationCenterExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332DAA7129CA58FE00DD3E46 /* NotificationCenterExampleView.swift */; };
+		332DAA7429CA732700DD3E46 /* SubscriptionExamplesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332DAA7329CA732700DD3E46 /* SubscriptionExamplesViewModel.swift */; };
+		332DAA7629CB9E4500DD3E46 /* WithLatestFromExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332DAA7529CB9E4500DD3E46 /* WithLatestFromExampleView.swift */; };
 		33CF6EDE29AEE1E000E24389 /* DemoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CF6EDD29AEE1E000E24389 /* DemoAppApp.swift */; };
 		33CF6EE029AEE1E000E24389 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CF6EDF29AEE1E000E24389 /* ContentView.swift */; };
 		33CF6EE229AEE1E100E24389 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33CF6EE129AEE1E100E24389 /* Assets.xcassets */; };
@@ -18,9 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		332DAA7129CA58FE00DD3E46 /* NotificationCenterExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterExample.swift; sourceTree = "<group>"; };
-		332DAA7329CA732700DD3E46 /* SubscriptionExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionExamples.swift; sourceTree = "<group>"; };
-		332DAA7529CB9E4500DD3E46 /* WithLatestFromExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithLatestFromExample.swift; sourceTree = "<group>"; };
+		332DAA7129CA58FE00DD3E46 /* NotificationCenterExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterExampleView.swift; sourceTree = "<group>"; };
+		332DAA7329CA732700DD3E46 /* SubscriptionExamplesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionExamplesViewModel.swift; sourceTree = "<group>"; };
+		332DAA7529CB9E4500DD3E46 /* WithLatestFromExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithLatestFromExampleView.swift; sourceTree = "<group>"; };
 		33CF6EDA29AEE1E000E24389 /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33CF6EDD29AEE1E000E24389 /* DemoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppApp.swift; sourceTree = "<group>"; };
 		33CF6EDF29AEE1E000E24389 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -66,9 +66,9 @@
 				33CF6EE129AEE1E100E24389 /* Assets.xcassets */,
 				33CF6EE329AEE1E100E24389 /* DemoApp.entitlements */,
 				33CF6EE429AEE1E100E24389 /* Preview Content */,
-				332DAA7129CA58FE00DD3E46 /* NotificationCenterExample.swift */,
-				332DAA7529CB9E4500DD3E46 /* WithLatestFromExample.swift */,
-				332DAA7329CA732700DD3E46 /* SubscriptionExamples.swift */,
+				332DAA7129CA58FE00DD3E46 /* NotificationCenterExampleView.swift */,
+				332DAA7529CB9E4500DD3E46 /* WithLatestFromExampleView.swift */,
+				332DAA7329CA732700DD3E46 /* SubscriptionExamplesViewModel.swift */,
 			);
 			path = DemoApp;
 			sourceTree = "<group>";
@@ -184,10 +184,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				332DAA7629CB9E4500DD3E46 /* WithLatestFromExample.swift in Sources */,
+				332DAA7629CB9E4500DD3E46 /* WithLatestFromExampleView.swift in Sources */,
 				33CF6EE029AEE1E000E24389 /* ContentView.swift in Sources */,
-				332DAA7429CA732700DD3E46 /* SubscriptionExamples.swift in Sources */,
-				332DAA7229CA58FE00DD3E46 /* NotificationCenterExample.swift in Sources */,
+				332DAA7429CA732700DD3E46 /* SubscriptionExamplesViewModel.swift in Sources */,
+				332DAA7229CA58FE00DD3E46 /* NotificationCenterExampleView.swift in Sources */,
 				33CF6EDE29AEE1E000E24389 /* DemoAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

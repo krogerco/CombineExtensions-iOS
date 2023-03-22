@@ -29,7 +29,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                NavigationLink("Notification Center Extensions", destination: NotificationCenterExample())
+                NavigationLink("Notification Center Extensions", destination: NotificationCenterExampleView())
                 NavigationLink("Subscription Extensions", destination: SubscriptionExamplesView())
                 NavigationLink("With Latest From", destination: WithLatestFromExampleView())
             }
