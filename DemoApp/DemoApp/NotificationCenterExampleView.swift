@@ -42,14 +42,13 @@ class NotificationCenterViewModel: ObservableObject {
     var subcription: AnyCancellable?
 
     init() {
-        applySubscription(to: [notificationA, notificationB, notificationC])
-    }
 
-    /// Subscribe to multiple notifications in a single publisher.
-    func applySubscription(to notificationNames: [Notification.Name]) {
+        let notificationNames = [notificationA, notificationB, notificationC]
+
+        /// Subscribe to multiple notifications in a single publisher.
         subcription = notificationCenter
             .publisher(for: notificationNames)
-            .receive(on: DispatchQueue.main)
+            .receive(on: RunLoop.main)
             .sink(to: NotificationCenterViewModel.handle, on: self, ownership: .weak)
     }
 

@@ -39,12 +39,6 @@ class WithLatestFromExampleViewModel: ObservableObject {
     var subscriptions: Set<AnyCancellable> = []
 
     init() {
-        applySubscriptions()
-    }
-
-    /// Subscribe to multiple notifications in a single publisher.
-    func applySubscriptions() {
-
         // The `withLatestFrom` publisher passively tracks the switchB value, but will only publish when `switchA` updates.
         $switchA
             .withLatestFrom($switchB)

@@ -40,12 +40,6 @@ class SubscriptionExamplesViewModel: ObservableObject {
     var subscriptions: Set<AnyCancellable> = []
 
     init() {
-        applySubscriptions()
-    }
-
-    /// Subscribe to multiple notifications in a single publisher.
-    func applySubscriptions() {
-
         // Calls a function on a weakly captured `self`
         subjectA
             .receive(on: RunLoop.main)
