@@ -32,6 +32,11 @@ struct ContentView: View {
                 .tabItem {
                     Label("NotificationCenter", image: "pencil")
                 }
+
+            SubscriptionExamplesView()
+                .tabItem {
+                    Label("Subs", image: "pencil")
+                }
         }
     }
 }

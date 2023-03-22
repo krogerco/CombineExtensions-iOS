@@ -37,7 +37,7 @@ extension Publisher where Failure == Never {
     ///   - ownership: The retainment / ownership strategy for the object.
     /// - Returns: A cancellable instance, which you use when you end assignment of the received value.
     ///            Deallocation of the result will tear down the subscription stream.
-    func assign<T: AnyObject>(
+    public func assign<T: AnyObject>(
         to keyPath: ReferenceWritableKeyPath<T, Output>,
         on object: T,
         ownership: ObjectOwnership
