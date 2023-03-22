@@ -27,16 +27,12 @@ import CombineExtensions
 
 struct ContentView: View {
     var body: some View {
-        TabView {
-            NotificationCenterExample()
-                .tabItem {
-                    Label("NotificationCenter", image: "pencil")
-                }
-
-            SubscriptionExamplesView()
-                .tabItem {
-                    Label("Subs", image: "pencil")
-                }
+        NavigationView {
+            List {
+                NavigationLink("Notification Center Extensions", destination: NotificationCenterExample())
+                NavigationLink("Subscription Extensions", destination: SubscriptionExamplesView())
+                NavigationLink("With Latest From", destination: WithLatestFromExampleView())
+            }
         }
     }
 }
