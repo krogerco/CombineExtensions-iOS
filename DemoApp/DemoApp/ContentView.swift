@@ -27,12 +27,13 @@ import CombineExtensions
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
+        NavigationView {
+            List {
+                NavigationLink("Notification Center Extensions", destination: NotificationCenterExampleView())
+                NavigationLink("Subscription Extensions", destination: SubscriptionExamplesView())
+                NavigationLink("With Latest From", destination: WithLatestFromExampleView())
+            }
         }
-        .padding()
     }
 }
 
