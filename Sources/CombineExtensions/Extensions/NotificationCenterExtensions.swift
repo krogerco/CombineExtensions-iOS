@@ -31,6 +31,7 @@ extension NotificationCenter {
     ///
     /// - Parameters:
     ///   - names: The names of the notifications to publish. Duplicate names will be ignored.
+    ///   
     /// - Returns: A publisher that emits events when broadcasting notifications with the given names.
     public func publisher(for names: [Notification.Name]) -> AnyPublisher<Notification, Never> {
 

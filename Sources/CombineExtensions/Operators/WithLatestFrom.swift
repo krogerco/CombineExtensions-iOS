@@ -31,6 +31,7 @@ extension Publisher {
     ///     from self with the latest value from the second publisher, if any.
     ///
     /// - Parameter other: Second observable source.
+    ///
     /// - Returns: A publisher containing the result of combining each value of the self
     ///            with the latest value from the second publisher, if any, using the
     ///            specified result selector function.
@@ -46,7 +47,7 @@ extension Publishers {
     struct WithLatestFrom<Upstream: Publisher, Other: Publisher>: Publisher
         where Upstream.Failure == Other.Failure {
 
-        /// Tuple represening the upstream and other output.
+        /// Tuple representing the upstream and other output.
         typealias Output = (Upstream.Output, Other.Output)
         typealias Failure = Upstream.Failure
 

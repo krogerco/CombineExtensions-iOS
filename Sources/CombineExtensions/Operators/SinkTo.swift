@@ -32,6 +32,7 @@ extension Publisher where Failure == Never {
     ///   - function: A function reference defined on a type.
     ///   - object: The object to pass to the function reference, thus calling the function.
     ///   - ownership: The retainment / ownership strategy for the object.
+    ///
     /// - Returns: A cancellable instance, which you use when you end assignment of the received value.
     ///            Deallocation of the result will tear down the subscription stream.
     public func sink<T: AnyObject>(
@@ -58,6 +59,7 @@ extension Publisher where Failure == Never {
     ///   - function: A function reference defined on a type.
     ///   - object: The object to pass to the function reference, thus calling the function.
     ///   - ownership: The retainment / ownership strategy for the object.
+    ///   
     /// - Returns: A cancellable instance, which you use when you end assignment of the received value.
     ///            Deallocation of the result will tear down the subscription stream.
     public func sink<T: AnyObject>(
