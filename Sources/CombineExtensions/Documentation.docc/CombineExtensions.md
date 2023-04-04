@@ -1,6 +1,6 @@
 # ``CombineExtensions``
 
-CombineExtensions provides convieneice functions to Combine to make working with UIKit much easier.
+CombineExtensions provides convenience functions to Combine to make working with UIKit much easier.
 
 ## Topics
 

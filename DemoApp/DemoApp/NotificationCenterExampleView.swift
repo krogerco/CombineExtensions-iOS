@@ -39,14 +39,14 @@ class NotificationCenterViewModel: ObservableObject {
 
     @Published var capturedNotificationNames: [String] = []
 
-    var subcription: AnyCancellable?
+    var subscription: AnyCancellable?
 
     init() {
 
         let notificationNames = [notificationA, notificationB, notificationC]
 
         /// Subscribe to multiple notifications in a single publisher.
-        subcription = notificationCenter
+        subscription = notificationCenter
             .publisher(for: notificationNames)
             .receive(on: RunLoop.main)
             .sink(to: NotificationCenterViewModel.handle, on: self, ownership: .weak)

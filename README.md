@@ -5,12 +5,12 @@
 
 ## Requirements
 
-- Xcode 13.2+
+- Xcode 14.2+
 - Swift 5.7+
 
 ## Installation
 
-The easiest way to install Gauntlet is by adding a dependency via SPM.
+The easiest way to install CombineExtensions is by adding a dependency via SPM.
 
 ```swift
         .package(
