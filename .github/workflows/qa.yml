@@ -1,0 +1,14 @@
+name: Check for Sign Off
+
+on:
+  pull_request:
+    types: [unlabeled]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  sign-off-check:
+    name: Check sign-off
+    uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/qa.yml@v1.0.0
+    with:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
