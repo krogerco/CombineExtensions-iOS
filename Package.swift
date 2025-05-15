@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -14,9 +14,6 @@ let package = Package(
             name: "CombineExtensions",
             targets: ["CombineExtensions"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/krogerco/Gauntlet-iOS.git", from: Version(1, 1, 0))
-    ],
     targets: [
         .target(
             name: "CombineExtensions",
@@ -25,8 +22,7 @@ let package = Package(
         .testTarget(
             name: "CombineExtensionsTests",
             dependencies: [
-                .byName(name: "CombineExtensions"),
-                .product(name: "Gauntlet", package: "Gauntlet-iOS")
+                .byName(name: "CombineExtensions")
             ]
         )
     ]

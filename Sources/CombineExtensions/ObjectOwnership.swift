@@ -25,7 +25,7 @@ SOFTWARE.
 import Foundation
 
 /// Retain strategy for objects in subscription operators
-public enum ObjectOwnership {
+public enum ObjectOwnership: Sendable {
 
     /// Strongly retains the object in the subscription
     case strong
